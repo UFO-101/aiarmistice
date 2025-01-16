@@ -42,7 +42,7 @@ const AIArmisticeWebsite = () => {
             </div>
 
             <p className="text-2xl text-blue-200 max-w-2xl">
-              Building Consensus for Common Sense AI Safety
+              Building Consensus for AI Safety
             </p>
 
             {/* Mobile-only social media section */}
