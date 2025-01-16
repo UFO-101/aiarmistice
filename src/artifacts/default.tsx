@@ -1,68 +1,127 @@
-import { Github, Linkedin, Shield, Twitter } from 'lucide-react';
+import { Github, Linkedin, Menu, Shield, Twitter, X } from 'lucide-react';
+import { useState } from 'react';
 
 const AIArmisticeWebsite = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const menuItems = [
+    { href: "#manifesto", label: "Manifesto" },
+    { href: "#about", label: "About" },
+    { href: "#get-involved", label: "Get Involved" },
+    { href: "#events", label: "Events" },
+    { href: "#team", label: "Team" },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <header className="bg-gradient-to-r from-blue-950 to-gray-900 border-b border-gray-800">
-        <div className="max-w-5xl mx-auto px-6 py-16">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-6">
-              <Shield className="h-12 w-12 text-blue-400" />
-              <h1 className="text-4xl font-bold text-white">AI Armistice Project</h1>
+        <div className="max-w-5xl mx-auto px-6 pt-16">
+          <div className="flex flex-col gap-6 sm:gap-0">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <Shield className="h-12 w-12 text-blue-400" />
+                <h1 className="text-4xl font-bold text-white">AI Armistice Project</h1>
+              </div>
+
+              {/* Social Media Links - Hidden on mobile */}
+              <div className="hidden sm:flex items-center gap-6">
+                <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                  <Twitter className="h-6 w-6" />
+                  <span className="sr-only">Twitter</span>
+                </a>
+                <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                  <Github className="h-6 w-6" />
+                  <span className="sr-only">GitHub</span>
+                </a>
+                <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                  <Linkedin className="h-6 w-6" />
+                  <span className="sr-only">LinkedIn</span>
+                </a>
+              </div>
             </div>
 
-            {/* Social Media Links */}
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
-                <Twitter className="h-6 w-6" />
-                <span className="sr-only">Twitter</span>
-              </a>
-              <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
-                <Github className="h-6 w-6" />
-                <span className="sr-only">GitHub</span>
-              </a>
-              <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
-                <Linkedin className="h-6 w-6" />
-                <span className="sr-only">LinkedIn</span>
-              </a>
+            <p className="text-2xl text-blue-200 max-w-2xl">
+              Building Consensus for Common Sense AI Safety
+            </p>
+
+            {/* Mobile-only social media section */}
+            <div className="sm:hidden">  {/* Hide entire section on desktop */}
+              <div className="py-4 -mx-6 px-6 border-t border-gray-800">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                      <Twitter className="h-5 w-5" />
+                      <span className="sr-only">Twitter</span>
+                    </a>
+                    <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                      <Github className="h-5 w-5" />
+                      <span className="sr-only">GitHub</span>
+                    </a>
+                    <a href="#" className="text-blue-200 hover:text-blue-400 transition-colors">
+                      <Linkedin className="h-5 w-5" />
+                      <span className="sr-only">LinkedIn</span>
+                    </a>
+                  </div>
+                  <button
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    className="text-blue-200 hover:text-blue-400 transition-colors"
+                  >
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Toggle menu</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <p className="text-2xl text-blue-200 max-w-2xl">Building Consensus for Common Sense AI Safety</p>
         </div>
 
-        {/* Navigation Menu */}
-        <div className="max-w-5xl mx-auto px-6 py-4 border-t border-gray-800">
-          <nav>
-            <ul className="flex gap-8 text-sm">
-              <li>
-                <a href="#manifesto" className="text-blue-200 hover:text-blue-400 transition-colors">
-                  Manifesto
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-blue-200 hover:text-blue-400 transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#get-involved" className="text-blue-200 hover:text-blue-400 transition-colors">
-                  Get Involved
-                </a>
-              </li>
-              <li>
-                <a href="#events" className="text-blue-200 hover:text-blue-400 transition-colors">
-                  Events
-                </a>
-              </li>
-              <li>
-                <a href="#team" className="text-blue-200 hover:text-blue-400 transition-colors">
-                  Team
-                </a>
-              </li>
-            </ul>
-          </nav>
+        {/* Desktop Navigation */}
+        <div className="hidden sm:block sm:border-t-0 border-t border-gray-800">
+          <div className="max-w-5xl mx-auto px-6 py-4 sm:pt-8">
+            <nav>
+              <ul className="flex gap-8 text-sm">
+                {menuItems.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} className="text-blue-200 hover:text-blue-400 transition-colors">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
+
+        {/* Mobile Navigation Overlay */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-gray-950 bg-opacity-95">
+            <div className="max-w-5xl mx-auto px-6 py-4">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-blue-200 hover:text-blue-400 transition-colors mb-8"
+              >
+                <X className="h-6 w-6" />
+                <span className="sr-only">Close menu</span>
+              </button>
+              <nav>
+                <ul className="space-y-6">
+                  {menuItems.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-blue-200 hover:text-blue-400 transition-colors text-2xl font-semibold"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Main Content */}
