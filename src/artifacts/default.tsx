@@ -17,9 +17,9 @@ const AIArmisticeWebsite = () => {
       {/* Hero Section */}
       <header className="bg-gradient-to-r from-blue-950 to-gray-900 border-b border-gray-800">
         <div className="max-w-5xl mx-auto px-6 pt-16">
-          <div className="flex flex-col gap-6 sm:gap-0">
+          <div className="flex flex-col gap-6 sm:gap-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
                 <Shield className="h-12 w-12 text-blue-400" />
                 <h1 className="text-4xl font-bold text-white">AI Armistice Project</h1>
               </div>
