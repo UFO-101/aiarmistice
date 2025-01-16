@@ -2,29 +2,34 @@
 
 ## Table of Contents
 
-- [TL/DR](#tl-dr)
-- [Summary](#summary)
-- [Overview](#overview)
-- [Project scope](#project-scope)
-- [What's included?](#whats-included)
-- [Prerequisites](#prerequisites)
-- [Getting started](#getting-started)
-- [Project structure](#project-structure)
-- [Usage](#usage)
-- [Customization](#customization)
-- [Building for production](#building-for-production)
-- [Deploying your application](#deploying-your-application)
-  - [Local test deployment](#local-test-deployment)
-  - [Traditional web hosting](#traditional-web-hosting)
-  - [Cloud hosting platforms](#cloud-hosting-platforms)
-     - [Netlify](#netlify)
-     - [Vercel](#vercel)
-     - [GitHub Pages](#github-pages)
-     - [Cloudflare Pages](#cloudflare-pages)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+- [Claude Artifact Runner](#claude-artifact-runner)
+  - [Table of Contents](#table-of-contents)
+  - [TL/DR](#tldr)
+  - [Summary](#summary)
+  - [Overview](#overview)
+  - [Project scope](#project-scope)
+  - [What's included?](#whats-included)
+  - [Prerequisites](#prerequisites)
+  - [Getting started](#getting-started)
+  - [How to build your application](#how-to-build-your-application)
+  - [Project structure](#project-structure)
+  - [Customization](#customization)
+    - [Removing unneeded components / libraries](#removing-unneeded-components--libraries)
+      - [Unneeded Shadcn UI components](#unneeded-shadcn-ui-components)
+      - [Unneeded packages (ex: Recharts)](#unneeded-packages-ex-recharts)
+  - [Building for production](#building-for-production)
+  - [Deploying your application](#deploying-your-application)
+    - [Local test deployment](#local-test-deployment)
+    - [Traditional web hosting](#traditional-web-hosting)
+    - [Cloud hosting platforms](#cloud-hosting-platforms)
+      - [Netlify](#netlify)
+      - [Vercel](#vercel)
+      - [GitHub Pages](#github-pages)
+      - [Cloudflare Pages](#cloudflare-pages)
+  - [Troubleshooting](#troubleshooting)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgements](#acknowledgements)
 
 ## TL/DR
 
@@ -88,6 +93,7 @@ These are the libraries and frameworks this project provides, identical to those
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js
   minimum supported version is 16 (lts/gallium), tested up to version 23.2, version 22.11 is recommended
 - npm (usually comes with Node.js)
@@ -95,17 +101,20 @@ Before you begin, ensure you have the following installed:
 ## Getting started
 
 1. Clone the repository:
+
    ```
    git clone https://github.com/claudio-silva/claude-artifact-runner.git
    cd claude-artifact-runner
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```
 
 3. Start the development server:
+
    ```
    npm run dev
    ```
@@ -163,10 +172,12 @@ If you just want to run the Artifact locally, you may leave things as they are, 
 
 To do that, you may remove the pre-installed components or libraries that are not required by your application.
 
-#### Unneeded Shadcn UI components:
+#### Unneeded Shadcn UI components
+
   Just delete the component's files from `src/components/ui`.
 
-#### Unneeded packages (ex: Recharts):
+#### Unneeded packages (ex: Recharts)
+
   Use `npm remove` to uninstall them.
 
 ## Building for production
@@ -190,11 +201,13 @@ Here are several ways to deploy these files:
 For local testing of the production build, you can use the `serve` package:
 
 1. Install `serve` globally:
+
    ```
    npm install -g serve
    ```
 
 2. Navigate to your project directory and run:
+
    ```
    serve -s dist
    ```
@@ -210,6 +223,7 @@ If you want to deploy to a shared or dedicated web server:
 Remember to update any necessary configuration files (like `vite.config.ts`) before building your app if it is not being served from the root of your domain.
 
 For example, for `vite.config.ts`, you may configure it like this:
+
 ```javascript
 export default {
   base: '/subdirectory/', // Set this to the path your app is served from
@@ -226,11 +240,13 @@ Here are some popular free cloud hosting platforms and how to deploy your app to
 #### Netlify
 
 1. Install the Netlify CLI:
+
    ```
    npm install -g netlify-cli
    ```
 
 2. Run the following command in your project directory:
+
    ```
    netlify deploy
    ```
@@ -238,6 +254,7 @@ Here are some popular free cloud hosting platforms and how to deploy your app to
 3. Follow the prompts. When asked for the publish directory, enter `dist`.
 
 4. For production deployment, use:
+
    ```
    netlify deploy --prod
    ```
@@ -245,11 +262,13 @@ Here are some popular free cloud hosting platforms and how to deploy your app to
 #### Vercel
 
 1. Install the Vercel CLI:
+
    ```
    npm install -g vercel
    ```
 
 2. Run the following command in your project directory:
+
    ```
    vercel
    ```
@@ -261,11 +280,13 @@ Here are some popular free cloud hosting platforms and how to deploy your app to
 1. If you haven't already, create a GitHub repository for your project.
 
 2. Install the `gh-pages` package:
+
    ```
    npm install gh-pages --save-dev
    ```
 
 3. Add these scripts to your `package.json`:
+
    ```json
    "scripts": {
      "predeploy": "npm run build",
@@ -274,27 +295,51 @@ Here are some popular free cloud hosting platforms and how to deploy your app to
    ```
 
 4. Run:
+
    ```
    npm run deploy
    ```
 
-5. Set up GitHub Pages in your repository settings to use the `gh-pages` branch.
+5. **Important: Custom Domain Setup**
+   - If using a custom domain:
+     - Create a file named `CNAME` in your `public` directory containing just your domain name:
+
+       ```plaintext:public/CNAME
+       yourdomain.com
+       ```
+
+     - This file will be copied to the `dist` folder during build
+     - This prevents your custom domain from being unset during deployments
+     - This should set the custom domain property in the GitHub Pages settings
+
+   - DNS Configuration:
+     - Add a CNAME record at your domain registrar pointing to `<username>.github.io`
+     - DNS changes can take up to 48 hours to propagate
+     - During this time:
+       - The site might initially work on HTTP but not HTTPS
+       - GitHub will automatically provision an SSL certificate once DNS is properly configured
+     - After DNS propagation and SSL setup are complete, both HTTP and HTTPS should work correctly
+
+6. Make sure GitHub Pages is set up to use the `gh-pages` branch
 
 #### Cloudflare Pages
 
 You can deploy to Cloudflare Pages either through the Cloudflare dashboard or using the `wrangler` CLI tool. Here's how to do it using `wrangler`, which is often the most straightforward method:
 
 1. **Install Wrangler:**
+
    ```
    npm install -g wrangler
    ```
 
 2. **Login to Cloudflare:**
+
    ```
    wrangler login
    ```
 
 3. **Deploy your project:**
+
    ```
    wrangler pages deploy dist
    ```
@@ -341,8 +386,9 @@ This project is open source and available under the [MIT License](LICENSE).
 I found [Claude-React-Jumpstart](https://github.com/Bklieger/Claude-React-Jumpstart) when looking for a way to run Artifacts outside of [claude.ai](https://claude.ai).
 
 However, it did not fully meet my needs, so I decided to make my own project, as I wanted something that:
-   * was completely pre-configured (no need to install or configure additional stuff),
-   * was ready to go with a single `npm install`, and
-   * included all components and libraries needed to fully replicate the Artifacts environment.
+
+- was completely pre-configured (no need to install or configure additional stuff),
+- was ready to go with a single `npm install`, and
+- included all components and libraries needed to fully replicate the Artifacts environment.
 
 I would also like to thank [IntranetFactory](https://github.com/IntranetFactory) for contributing the routing solution for handling multiple Artifacts.
